@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laravel Location API - CLI Only</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 40px 0;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .warning-banner {
+            background: #ff6b6b;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            border-left: 1px solid #ff4757;
+        }
+        
+        .warning-banner i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .info-banner {
+            background: #4ecdc4;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            border-left: 1px solid #1a7f78;
+        }
+        
+        .info-banner i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .card h2 {
+            color: #4a5568;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card h2 i {
+            color: #667eea;
+            width: 30px;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .endpoint {
+            background: #edf2f7;
+            padding: 12px;
+            border-radius: 0px;
+            margin: 10px 0;
+            border-left: 1px solid #667eea;
+        }
+        
+        .method {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+        }
+        
+        .tool-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .tool-item {
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .tool-item i {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: #48bb78;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            margin: 2px;
+        }
+        
+        .prereq-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin: 3px;
+        }
+        
+        .step {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            opacity: 0.8;
+        }
+        
+        .git-link {
+            background: #333;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            display: inline-block;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-map-marker-alt"></i> Laravel Location API</h1>
+            <p>Command Line Interface (CLI) Only REST API</p>
+        </div>
+
+        <div class="warning-banner">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>CLI-Only Access Restriction</h3>
+            <p>This API is specifically designed for command-line tools and API clients.</p>
+            <p><strong>Web browser access is intentionally blocked.</strong></p>
+        </div>
+
+        <div class="info-banner">
+            <i class="fas fa-download"></i>
+            <h3>Git Repository</h3>
+            <p>Clone the project to get started:</p>
+            <div class="git-link">
+                git clone git@github.com:Mohamed-Sayed-Ismail/-laravel-api-example.git
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-info-circle"></i> About This API</h2>
+            <p>This is a specialized REST API for searching locations in Belgium by proximity and category. The API is configured to only respond to requests from command-line tools and API testing applications.</p>
+            
+            <div class="tool-list">
+                <div class="tool-item">
+                    <i class="fas fa-terminal"></i>
+                    <h4>curl</h4>
+                    <p>Command Line Tool</p>
+                </div>
+                <div class="tool-item">
+                    <i class="fas fa-window-restore"></i>
+                    <h4>Postman</h4>
+                    <p>API Testing</p>
+                </div>
+                <div class="tool-item">
+                    <i class="fas fa-desktop"></i>
+                    <h4>Insomnia</h4>
+                    <p>API Client</p>
+                </div>
+                <div class="tool-item">
+                    <i class="fas fa-code"></i>
+                    <h4>Custom Scripts</h4>
+                    <p>PHP, Python, etc.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-download"></i> Installation Guide</h2>
+            
+            <div class="step">
+                <h3><span class="step-number">1</span> Prerequisites</h3>
+                <p>Ensure you have the following installed:</p>
+                <p>
+                    <span class="prereq-badge">PHP 8.1+</span>
+                    <span class="prereq-badge">Composer</span>
+                    <span class="prereq-badge">Git</span>
+                    <span class="prereq-badge">SQLite</span>
+                </p>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">2</span> Clone Repository</h3>
+                <div class="code-block">
+git clone git@github.com:Mohamed-Sayed-Ismail/-laravel-api-example.git<br>
+cd laravel-api-example
+                </div>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">3</span> Install Dependencies</h3>
+                <div class="code-block">
+composer install
+                </div>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">4</span> Environment Setup</h3>
+                <div class="code-block">
+cp .env.example .env<br>
+php artisan key:generate
+                </div>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">5</span> Database Setup</h3>
+                <div class="code-block">
+touch database/database.sqlite<br>
+php artisan migrate<br>
+php artisan db:seed
+                </div>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">6</span> Start Server</h3>
+                <div class="code-block">
+php artisan serve
+                </div>
+                <p>Server will start at: <strong>http://localhost:8000</strong></p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-terminal"></i> Quick Test</h2>
+            <p>After installation, test the API immediately using curl:</p>
+            <div class="code-block">
+# Search for fun activities near Brussels<br>
+curl "http://localhost:8000/api/locations/search?latitude=50.8503&longitude=4.3517&search_type=fun"<br>
+<br>
+# Search for medical facilities with custom distance<br>
+curl "http://localhost:8000/api/locations/search?latitude=50.8503&longitude=4.3517&search_type=medic&distance=15"<br>
+<br>
+# Get all available location types<br>
+curl "http://localhost:8000/api/locations/types"
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-code"></i> API Endpoints</h2>
+            
+            <div class="endpoint">
+                <span class="method">GET</span>
+                <strong>/api/locations/search</strong>
+                <p>Search locations by type within distance</p>
+                <p><small>Params: latitude, longitude, search_type, distance(optional)</small></p>
+            </div>
+            
+            <div class="endpoint">
+                <span class="method">GET</span>
+                <strong>/api/locations/types</strong>
+                <p>Get all available location types</p>
+            </div>
+            
+            <div class="endpoint">
+                <span class="method">GET</span>
+                <strong>/api/locations/type/{type}</strong>
+                <p>Get all locations of specific type</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-tags"></i> Available Categories</h2>
+            <p>
+                <span class="badge">fun</span>
+                <span class="badge">theater</span>
+                <span class="badge">music</span>
+                <span class="badge">medic</span>
+                <span class="badge">restaurant</span>
+                <span class="badge">bar</span>
+                <span class="badge">museum</span>
+                <span class="badge">park</span>
+            </p>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-laptop-code"></i> Usage Examples</h2>
+            
+            <h4>Using curl:</h4>
+            <div class="code-block">
+curl -s "http://localhost:8000/api/locations/search?latitude=50.8503&longitude=4.3517&search_type=music"
+            </div>
+            
+            <h4>Using PHP:</h4>
+            <div class="code-block">
+$response = file_get_contents(<br>&nbsp;&nbsp;"http://localhost:8000/api/locations/search?latitude=50.8503&longitude=4.3517&search_type=fun"<br>);
+            </div>
+            
+            <h4>Using Python:</h4>
+            <div class="code-block">
+import requests<br>
+response = requests.get(<br>&nbsp;&nbsp;"http://localhost:8000/api/locations/search",<br>&nbsp;&nbsp;params={"latitude": 50.8503, "longitude": 4.3517, "search_type": "medic"}<br>)
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-exclamation-circle"></i> Access Notes</h2>
+            <p><strong>This API will return 403 Forbidden error when accessed from:</strong></p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li><i class="fas fa-times" style="color: #ff6b6b;"></i> Web browsers (Chrome, Firefox, Safari, Edge)</li>
+                <li><i class="fas fa-times" style="color: #ff6b6b;"></i> Any request with browser User-Agent headers</li>
+            </ul>
+            <p style="margin-top: 15px;"><strong>Allowed access from:</strong></p>
+            <ul style="margin-left: 20px;">
+                <li><i class="fas fa-check" style="color: #48bb78;"></i> Command line tools (curl, wget, httpie)</li>
+                <li><i class="fas fa-check" style="color: #48bb78;"></i> API clients (Postman, Insomnia, Thunder Client)</li>
+                <li><i class="fas fa-check" style="color: #48bb78;"></i> Custom scripts and applications</li>
+                <li><i class="fas fa-check" style="color: #48bb78;"></i> Laravel Artisan commands</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-question-circle"></i> Troubleshooting</h2>
+            
+            <h4>Common Issues:</h4>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li><strong>PHP not found:</strong> Install PHP or add to PATH</li>
+                <li><strong>Composer not found:</strong> Download from getcomposer.org</li>
+                <li><strong>SQLite issues:</strong> Install php-sqlite3 package</li>
+                <li><strong>Port busy:</strong> Use <code>php artisan serve --port=8001</code></li>
+                <li><strong>Permission errors:</strong> Run <code>chmod -R 755 storage bootstrap/cache</code></li>
+            </ul>
+            
+            <h4 style="margin-top: 20px;">Verification Commands:</h4>
+            <div class="code-block">
+# Check PHP version<br>
+php --version<br><br>
+# Check Composer<br>
+composer --version<br><br>
+# Check SQLite<br>
+php -m | grep sqlite
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Laravel Location API - CLI Only &copy; 2025 | Repository: git@github.com:Mohamed-Sayed-Ismail/-laravel-api-example.git</p>
+    </div>
+</body>
+</html>
