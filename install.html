@@ -293,6 +293,11 @@ composer install
 cp .env.example .env<br>
 php artisan key:generate
                 </div>
+                <p><strong>Optional:</strong> Add an API key to .env for enhanced features:</p>
+                <div class="code-block">
+# Add this line to your .env file for Google Maps integration<br>
+API_KEY=your-secret-api-key-here
+                </div>
             </div>
 
             <div class="step">
@@ -316,6 +321,8 @@ php artisan serve
         <div class="card">
             <h2><i class="fas fa-terminal"></i> Quick Test</h2>
             <p>After installation, test the API immediately using curl:</p>
+            
+            <h4>Basic API Test (without API key):</h4>
             <div class="code-block">
 # Search for fun activities near Brussels<br>
 curl "http://localhost:8000/api/locations/search?latitude=50.8503&longitude=4.3517&search_type=fun"<br>
@@ -325,6 +332,39 @@ curl "http://localhost:8000/api/locations/search?latitude=50.8503&longitude=4.35
 <br>
 # Get all available location types<br>
 curl "http://localhost:8000/api/locations/types"
+            </div>
+            
+            <h4>Enhanced API Test (with API key for Google Maps):</h4>
+            <div class="code-block">
+# First, visit http://localhost:8000 to generate an API key<br>
+# Then use it in your requests:<br>
+<br>
+curl -H "X-API-Key: your-generated-api-key" \<br>
+&nbsp;&nbsp;"http://localhost:8000/api/locations/search?latitude=50.8503&longitude=4.3517&search_type=fun"<br>
+<br>
+# Or use query parameter:<br>
+curl "http://localhost:8000/api/locations/search?latitude=50.8503&longitude=4.3517&search_type=fun&api_key=your-api-key"
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-key"></i> API Key System (Optional)</h2>
+            <p>This API supports optional API key authentication for enhanced features:</p>
+            
+            <h4>Setting Up API Key:</h4>
+            <div class="code-block">
+# 1. Set your API key in .env file<br>
+API_KEY=your-secret-api-key-here<br>
+<br>
+# 2. Access the home page to generate keys<br>
+# Visit: http://localhost:8000 (in web browser)<br>
+<br>
+# 3. Use the generated key in requests
+            </div>
+            
+            <div style="background: #e8f5e8; padding: 15px; border-radius: 5px; margin: 15px 0; border-left: 4px solid #48bb78;">
+                <h4 style="color: #2d7738;"><i class="fas fa-info-circle"></i> Enhanced Features with API Key</h4>
+                <p style="color: #2d7738; margin-bottom: 0;">When using an API key, location responses include Google Maps links for easy navigation!</p>
             </div>
         </div>
 
@@ -336,18 +376,21 @@ curl "http://localhost:8000/api/locations/types"
                 <strong>/api/locations/search</strong>
                 <p>Search locations by type within distance</p>
                 <p><small>Params: latitude, longitude, search_type, distance(optional)</small></p>
+                <p><small>Headers: X-API-Key (optional) | Query: api_key (optional)</small></p>
             </div>
             
             <div class="endpoint">
                 <span class="method">GET</span>
                 <strong>/api/locations/types</strong>
                 <p>Get all available location types</p>
+                <p><small>Headers: X-API-Key (optional) | Query: api_key (optional)</small></p>
             </div>
             
             <div class="endpoint">
                 <span class="method">GET</span>
                 <strong>/api/locations/type/{type}</strong>
                 <p>Get all locations of specific type</p>
+                <p><small>Headers: X-API-Key (optional) | Query: api_key (optional)</small></p>
             </div>
         </div>
 
@@ -368,31 +411,108 @@ curl "http://localhost:8000/api/locations/types"
         <div class="card">
             <h2><i class="fas fa-laptop-code"></i> Usage Examples</h2>
             
+            <h3 style="color: #667eea; margin-bottom: 15px;">🔓 Basic Usage (Without API Key)</h3>
+            
             <h4>Using curl:</h4>
             <div class="code-block">
 curl -s "http://localhost:8000/api/locations/search?latitude=50.8503&longitude=4.3517&search_type=music"
             </div>
             
-            <h4>Using PHP:</h4>
-            <div class="code-block">
-$response = file_get_contents(<br>&nbsp;&nbsp;"http://localhost:8000/api/locations/search?latitude=50.8503&longitude=4.3517&search_type=fun"<br>);
+            <h4>Example Response (Basic):</h4>
+            <div class="code-block" style="background: #2a4a3a; color: #90ee90;">
+{<br>
+&nbsp;&nbsp;"data": [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"id": 1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name": "Brussels Music Hall",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"address": "Avenue Louise 123, 1000 Brussels",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"latitude": "50.8403",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"longitude": "4.3571",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "music",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"distance": 1.2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;]<br>
+}
             </div>
             
-            <h4>Using Python:</h4>
+            <h3 style="color: #48bb78; margin: 30px 0 15px 0;">🔐 Enhanced Usage (With API Key)</h3>
+            
+            <h4>Using curl with API Key (Header):</h4>
+            <div class="code-block">
+curl -s -H "X-API-Key: your-api-key-here" \<br>
+&nbsp;&nbsp;"http://localhost:8000/api/locations/search?latitude=50.8503&longitude=4.3517&search_type=music"
+            </div>
+            
+            <h4>Using curl with API Key (Query Parameter):</h4>
+            <div class="code-block">
+curl -s "http://localhost:8000/api/locations/search?latitude=50.8503&longitude=4.3517&search_type=music&api_key=your-api-key-here"
+            </div>
+            
+            <h4>Example Response (Enhanced with Google Maps):</h4>
+            <div class="code-block" style="background: #2a4a3a; color: #90ee90;">
+{<br>
+&nbsp;&nbsp;"data": [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"id": 1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name": "Brussels Music Hall",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"address": "Avenue Louise 123, 1000 Brussels",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"latitude": "50.8403",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"longitude": "4.3571",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "music",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"distance": 1.2,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #ffd700;">"google_maps_url": "https://www.google.com/maps?q=50.8403,4.3571"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;]<br>
+}
+            </div>
+            
+            <h4>Using PHP with API Key:</h4>
+            <div class="code-block">
+$context = stream_context_create([<br>
+&nbsp;&nbsp;"http" => [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"header" => "X-API-Key: your-api-key-here"<br>
+&nbsp;&nbsp;]<br>
+]);<br>
+$response = file_get_contents(<br>
+&nbsp;&nbsp;"http://localhost:8000/api/locations/search?latitude=50.8503&longitude=4.3517&search_type=fun",<br>
+&nbsp;&nbsp;false,<br>
+&nbsp;&nbsp;$context<br>
+);
+            </div>
+            
+            <h4>Using Python with API Key:</h4>
             <div class="code-block">
 import requests<br>
-response = requests.get(<br>&nbsp;&nbsp;"http://localhost:8000/api/locations/search",<br>&nbsp;&nbsp;params={"latitude": 50.8503, "longitude": 4.3517, "search_type": "medic"}<br>)
+headers = {"X-API-Key": "your-api-key-here"}<br>
+response = requests.get(<br>
+&nbsp;&nbsp;"http://localhost:8000/api/locations/search",<br>
+&nbsp;&nbsp;params={"latitude": 50.8503, "longitude": 4.3517, "search_type": "medic"},<br>
+&nbsp;&nbsp;headers=headers<br>
+)
             </div>
         </div>
 
         <div class="card">
             <h2><i class="fas fa-exclamation-circle"></i> Access Notes</h2>
-            <p><strong>This API will return 403 Forbidden error when accessed from:</strong></p>
+            <p><strong>This API has two access levels:</strong></p>
+            
+            <div style="background: #fff3cd; padding: 15px; border-radius: 5px; margin: 15px 0; border-left: 4px solid #ffc107;">
+                <h4 style="color: #856404;"><i class="fas fa-home"></i> Web Interface Access</h4>
+                <p style="color: #856404; margin-bottom: 5px;"><strong>✓ Allowed:</strong> Home page for API key generation</p>
+                <p style="color: #856404; margin-bottom: 0;"><strong>URL:</strong> http://localhost:8000 (accessible in web browsers)</p>
+            </div>
+            
+            <div style="background: #f8d7da; padding: 15px; border-radius: 5px; margin: 15px 0; border-left: 4px solid #dc3545;">
+                <h4 style="color: #721c24;"><i class="fas fa-ban"></i> API Endpoints - Browser Blocked</h4>
+                <p style="color: #721c24; margin-bottom: 0;"><strong>✗ Forbidden:</strong> All /api/* endpoints return 403 when accessed from web browsers</p>
+            </div>
+            
+            <p><strong>API endpoints will return 403 Forbidden error when accessed from:</strong></p>
             <ul style="margin-left: 20px; margin-top: 10px;">
                 <li><i class="fas fa-times" style="color: #ff6b6b;"></i> Web browsers (Chrome, Firefox, Safari, Edge)</li>
                 <li><i class="fas fa-times" style="color: #ff6b6b;"></i> Any request with browser User-Agent headers</li>
             </ul>
-            <p style="margin-top: 15px;"><strong>Allowed access from:</strong></p>
+            <p style="margin-top: 15px;"><strong>API access allowed from:</strong></p>
             <ul style="margin-left: 20px;">
                 <li><i class="fas fa-check" style="color: #48bb78;"></i> Command line tools (curl, wget, httpie)</li>
                 <li><i class="fas fa-check" style="color: #48bb78;"></i> API clients (Postman, Insomnia, Thunder Client)</li>
